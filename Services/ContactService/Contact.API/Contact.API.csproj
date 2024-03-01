@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>782df8fa-3c40-4e6b-ab8c-876a7178fab6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contact.Infrastracture\Contact.Infrastracture.csproj" />
+    <ProjectReference Include="..\Contact.Models\Contact.Models.csproj" />
+    <ProjectReference Include="..\Contact.Services\Contact.Services.csproj" />
+  </ItemGroup>
+
+</Project>

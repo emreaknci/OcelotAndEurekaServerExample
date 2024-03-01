@@ -1,0 +1,76 @@
+{
+  "Routes": [
+    //ReservationService
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "ReservationService",
+      "DownstreamPathTemplate": "/api/reservations/{everything}",
+      "UpstreamPathTemplate": "/reservation/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    //---------------------
+    //ContactService
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "ContactService",
+      "DownstreamPathTemplate": "/api/contacts/{everything}",
+      "UpstreamPathTemplate": "/contact/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 15,
+        "Region": "europe-central",
+        "Header": "Authorization"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "5s",
+        "PeriodTimespan": 5,
+        "Limit": 1
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    },
+    //---------------------
+    //IdentityService
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    }
+    //---------------------
+
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000",
+    "RequestIdKey": "OcRequestId",
+    "DownstreamScheme": "http",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false,
+      "HttpStatusCode": 429,
+      "QuotaExceededMessage": "Too Many Requests",
+      "RateLimitCounterPrefix": "oc"
+    },
+    "ServiceDiscoveryProvider": {
+      "Host": "services.gateway",
+      "Port": 8761,
+      "Type": "Eureka"
+    }
+  }
+}
